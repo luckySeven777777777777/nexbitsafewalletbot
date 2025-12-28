@@ -11,6 +11,8 @@ from telegram.ext import (
     ContextTypes,
     filters,
 )
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.constants import ParseMode
 
 # 从 Railway / 环境变量读取 Token（不要写死）
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -20,6 +22,19 @@ TRADE_URL = "https://www.nexbitsafe.com/trade"
 
 # 客服账号（或群）
 SUPPORT_CONTACT = "@nexbitonlineservice"
+# ===== Ad Content Config (Editable) =====
+AD_TEXT = os.getenv(
+    "AD_TEXT",
+    "🚀 *NEXBIT-SAFE WALLET*\n\n"
+    "🔐 Secure, non-custodial crypto wallet\n"
+    "📊 Real-time market data & analytics\n"
+    "⚡ Fast, reliable infrastructure\n\n"
+    "👇 Tap below to continue"
+)
+
+# ===== Channel Ads Config =====
+CHANNEL_ID = -1003521365611  # ⚠️ 换成你的频道ID
+AD_IMAGE_URL = "https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_630,w_1200,f_auto,q_auto/13252794/465742_58544.png"  # 广告图片（必须是公网 https）
 
 
 # /start：自动发送欢迎 + 底部键盘
@@ -68,6 +83,26 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Please use the buttons below 👇"
         )
 
+async def send_daily_channel_ad(context: ContextTypes.DEFAULT_TYPE):
+    caption = AD_TEXT
+
+    keyboard = [
+        [
+            InlineKeyboardButton("🚀 TRADE", url=TRADE_URL),
+            InlineKeyboardButton(
+                "🆘 SUPPORT",
+                url=f"https://t.me/{SUPPORT_CONTACT.lstrip('@')}"
+            )
+        ]
+    ]
+
+    await context.bot.send_photo(
+        chat_id=CHANNEL_ID,
+        photo=AD_IMAGE_URL,
+        caption=caption,
+        reply_markup=InlineKeyboardMarkup(keyboard),
+        parse_mode=ParseMode.MARKDOWN
+    )
 
 def main():
     if not BOT_TOKEN:
@@ -78,9 +113,15 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_buttons))
 
+    # ===== Daily Channel Ad (Once Per Day) =====
+    app.job_queue.run_repeating(
+        send_daily_channel_ad,
+        interval=24 * 60 * 60,
+        first=10
+    )
+
     print("🤖 NEXBIT-SAFE Wallet Bot is running...")
     app.run_polling()
-
 
 if __name__ == "__main__":
     main()

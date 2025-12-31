@@ -92,7 +92,7 @@ async def send_daily_channel_ad(context: ContextTypes.DEFAULT_TYPE):
             InlineKeyboardButton("📊 MARKET", url="https://www.nexbitsafe.com/market"),
         ],
         [
-            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/plan"),
+            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/arbitrage-products"),
             InlineKeyboardButton("🤖 AI BOT", url="https://t.me/nexbitsafebot"),
         ],
         [

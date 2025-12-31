@@ -41,17 +41,21 @@ AD_IMAGE_URL = "https://custom-images.strikinglycdn.com/res/hrscywv4p/image/uplo
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
-            KeyboardButton("🚀 TRADE NOW"),
-            KeyboardButton("🆘 SUPPORT"),
-        ]
+            InlineKeyboardButton("🔥 DEPOSIT", url="https://www.nexbitsafe.com/deposit"),
+            InlineKeyboardButton("📊 MARKET", url="https://www.nexbitsafe.com/market"),
+        ],
+        [
+            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/arbitrage-products"),
+            InlineKeyboardButton("🤖 AI BOT", url="https://t.me/nexbitsafebot"),
+        ],
+        [
+            InlineKeyboardButton("🚀 TRADE", url=TRADE_URL),
+            InlineKeyboardButton(
+                "🆘 SUPPORT",
+                url=f"https://t.me/{SUPPORT_CONTACT.lstrip('@')}",
+            ),
+        ],
     ]
-
-    reply_markup = ReplyKeyboardMarkup(
-        keyboard=keyboard,
-        resize_keyboard=True,
-        one_time_keyboard=False,
-        input_field_placeholder="Choose an option"
-    )
 
     await update.message.reply_text(
         "👋 Welcome to *NEXBIT-SAFE Wallet*\n\n"
@@ -59,9 +63,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📊 Real-time market data & tools\n"
         "⚡ Fast, reliable, and safe\n\n"
         "👇 Choose an option below:",
-        reply_markup=reply_markup,
-        parse_mode="Markdown"
+        reply_markup=InlineKeyboardMarkup(keyboard),
+        parse_mode=ParseMode.MARKDOWN,
     )
+
 
 
 # 处理按钮点击
@@ -111,7 +116,6 @@ def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_buttons))
 
     # ===== Daily Channel Ad (Once Per Day) =====
     app.job_queue.run_repeating(

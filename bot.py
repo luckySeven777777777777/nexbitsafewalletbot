@@ -41,21 +41,17 @@ AD_IMAGE_URL = "https://custom-images.strikinglycdn.com/res/hrscywv4p/image/uplo
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
-            InlineKeyboardButton("🔥 DEPOSIT", url="https://www.nexbitsafe.com/deposit"),
-            InlineKeyboardButton("📊 MARKET", url="https://www.nexbitsafe.com/market"),
-        ],
-        [
-            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/arbitrage-products"),
-            InlineKeyboardButton("🤖 AI BOT", url="https://t.me/nexbitsafebot"),
-        ],
-        [
-            InlineKeyboardButton("🚀 TRADE", url=TRADE_URL),
-            InlineKeyboardButton(
-                "🆘 SUPPORT",
-                url=f"https://t.me/{SUPPORT_CONTACT.lstrip('@')}",
-            ),
-        ],
+            KeyboardButton("🚀 TRADE NOW"),
+            KeyboardButton("🆘 SUPPORT"),
+        ]
     ]
+
+    reply_markup = ReplyKeyboardMarkup(
+        keyboard=keyboard,
+        resize_keyboard=True,
+        one_time_keyboard=False,
+        input_field_placeholder="Choose an option"
+    )
 
     await update.message.reply_text(
         "👋 Welcome to *NEXBIT-SAFE Wallet*\n\n"
@@ -63,10 +59,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📊 Real-time market data & tools\n"
         "⚡ Fast, reliable, and safe\n\n"
         "👇 Choose an option below:",
-        reply_markup=InlineKeyboardMarkup(keyboard),
-        parse_mode=ParseMode.MARKDOWN,
+        reply_markup=reply_markup,
+        parse_mode="Markdown"
     )
-
 
 
 # 处理按钮点击
@@ -89,13 +84,15 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 async def send_daily_channel_ad(context: ContextTypes.DEFAULT_TYPE):
+    caption = AD_TEXT
+
     keyboard = [
         [
             InlineKeyboardButton("🔥 DEPOSIT", url="https://www.nexbitsafe.com/deposit"),
             InlineKeyboardButton("📊 MARKET", url="https://www.nexbitsafe.com/market"),
         ],
         [
-            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/arbitrage-products"),
+            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/plan"),
             InlineKeyboardButton("🤖 AI BOT", url="https://t.me/nexbitsafebot"),
         ],
         [
@@ -103,43 +100,34 @@ async def send_daily_channel_ad(context: ContextTypes.DEFAULT_TYPE):
             InlineKeyboardButton(
                 "🆘 SUPPORT",
                 url=f"https://t.me/{SUPPORT_CONTACT.lstrip('@')}"
-            ),
-        ],
+            )
+        ]
     ]
 
     await context.bot.send_photo(
         chat_id=CHANNEL_ID,
         photo=AD_IMAGE_URL,
-        caption=AD_TEXT,
+        caption=caption,
         reply_markup=InlineKeyboardMarkup(keyboard),
-        parse_mode=ParseMode.MARKDOWN,
+        parse_mode=ParseMode.MARKDOWN
     )
 
 def main():
     if not BOT_TOKEN:
         raise RuntimeError("BOT_TOKEN is not set")
 
-    from telegram.request import HTTPXRequest
-
-    request = HTTPXRequest(
-        connect_timeout=20,
-        read_timeout=20,
-    )
-
-    app = (
-        ApplicationBuilder()
-        .token(BOT_TOKEN)
-        .request(request)
-        .build()
-    )
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_buttons))
 
+    # ===== Daily Channel Ad (Once Per Day) =====
     app.job_queue.run_repeating(
-        send_daily_channel_ad,
-        interval=3 * 24 * 60 * 60,
-        first=10
-    )
+    send_daily_channel_ad,
+    interval=3 * 24 * 60 * 60,  # ✅ 3 天一次
+    first=10
+)
+
 
     print("🤖 NEXBIT-SAFE Wallet Bot is running...")
     app.run_polling()

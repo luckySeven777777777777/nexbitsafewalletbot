@@ -89,24 +89,30 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 async def send_daily_channel_ad(context: ContextTypes.DEFAULT_TYPE):
-    caption = AD_TEXT
-
     keyboard = [
+        [
+            InlineKeyboardButton("🔥 DEPOSIT", url="https://www.nexbitsafe.com/deposit"),
+            InlineKeyboardButton("📊 MARKET", url="https://www.nexbitsafe.com/market"),
+        ],
+        [
+            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/arbitrage-products"),
+            InlineKeyboardButton("🤖 AI BOT", url="https://t.me/nexbitsafebot"),
+        ],
         [
             InlineKeyboardButton("🚀 TRADE", url=TRADE_URL),
             InlineKeyboardButton(
                 "🆘 SUPPORT",
                 url=f"https://t.me/{SUPPORT_CONTACT.lstrip('@')}"
-            )
-        ]
+            ),
+        ],
     ]
 
     await context.bot.send_photo(
         chat_id=CHANNEL_ID,
         photo=AD_IMAGE_URL,
-        caption=caption,
+        caption=AD_TEXT,
         reply_markup=InlineKeyboardMarkup(keyboard),
-        parse_mode=ParseMode.MARKDOWN
+        parse_mode=ParseMode.MARKDOWN,
     )
 
 def main():

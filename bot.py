@@ -119,17 +119,27 @@ def main():
     if not BOT_TOKEN:
         raise RuntimeError("BOT_TOKEN is not set")
 
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    from telegram.request import HTTPXRequest
+
+    request = HTTPXRequest(
+        connect_timeout=20,
+        read_timeout=20,
+    )
+
+    app = (
+        ApplicationBuilder()
+        .token(BOT_TOKEN)
+        .request(request)
+        .build()
+    )
 
     app.add_handler(CommandHandler("start", start))
 
-    # ===== Daily Channel Ad (Once Per Day) =====
     app.job_queue.run_repeating(
-    send_daily_channel_ad,
-    interval=3 * 24 * 60 * 60,  # ✅ 3 天一次
-    first=10
-)
-
+        send_daily_channel_ad,
+        interval=3 * 24 * 60 * 60,
+        first=10
+    )
 
     print("🤖 NEXBIT-SAFE Wallet Bot is running...")
     app.run_polling()

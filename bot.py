@@ -66,7 +66,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # 处理按钮点击
 async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # 有些 update 没有 message（例如按钮点击 / 系统事件）
+    if not update.message:
+        return
+
     text = update.message.text
+
 
     if text == "🚀 TRADE NOW":
         await update.message.reply_text(

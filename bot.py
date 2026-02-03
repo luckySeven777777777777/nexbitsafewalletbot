@@ -34,7 +34,7 @@ AD_TEXT = os.getenv(
 
 # ===== Channel Ads Config =====
 CHANNEL_ID = -1003521365611  # ⚠️ 换成你的频道ID
-AD_IMAGE_URL = "https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/13252794/770448_524050.png"  # 广告图片（必须是公网 https）
+AD_IMAGE_URL = "https://t3.ftcdn.net/jpg/16/55/10/30/360_F_1655103052_0PkAG5DGDHUQDxVEfMBCbtVS4yYrm7dL.jpg"  # 广告图片（必须是公网 https）
 
 
 # /start：自动发送欢迎 + 底部键盘
@@ -129,9 +129,10 @@ def main():
     # ===== Daily Channel Ad (Once Per Day) =====
     app.job_queue.run_repeating(
     send_daily_channel_ad,
-    interval=3 * 24 * 60 * 60,  # ✅ 3 天一次
+    interval=7 * 24 * 60 * 60,  # ✅ 7 天（一个星期）一次
     first=10
 )
+
 
 
     print("🤖 NEXBIT-SAFE Wallet Bot is running...")

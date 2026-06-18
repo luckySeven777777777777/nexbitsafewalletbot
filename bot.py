@@ -110,7 +110,7 @@ AD_PAIRS = [
     # 14. Mobile Trading
     (
         "Gemini_Generated_Image_xoze34xoze34xoze.png",
-        "📱 *X-WALLET — iOS & Android App*\n\nFull trading functionality on mobile\nFace ID / fingerprint biometric unlock\nPush alerts for price targets & whale moves\n\n👇 Download App"
+        "📱 *X-WALLET — iOS & Android App*\n\nFull trading functionality on mobile\nFace ID / fingerprint biometric unlock\nPush alerts for price targets & whale moves\n\n👇 Open Now"
     ),
     # 15. Live Market Data
     (

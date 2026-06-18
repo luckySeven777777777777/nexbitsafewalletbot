@@ -18,14 +18,14 @@ from telegram.constants import ParseMode
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # 你的真实交易 / WebApp 地址
-TRADE_URL = "https://www.nexbitsafe.com/trade"
+TRADE_URL = "https://www.appyourplatform.info/trade"
 
 # 客服账号（或群）
-SUPPORT_CONTACT = "@nexbitonlineservice"
+SUPPORT_CONTACT = "@xwallettonlineservice"
 # ===== Ad Content Config (Editable) =====
 AD_TEXT = os.getenv(
     "AD_TEXT",
-    "🚀 *NEXBIT-SAFE WALLET*\n\n"
+    "🚀 *X-WALLET*\n\n"
     "🔐 Secure, non-custodial crypto wallet\n"
     "📊 Real-time market data & analytics\n"
     "⚡ Fast, reliable infrastructure\n\n"
@@ -34,7 +34,7 @@ AD_TEXT = os.getenv(
 
 # ===== Channel Ads Config =====
 CHANNEL_ID = -1003521365611  # ⚠️ 换成你的频道ID
-AD_IMAGE_URL = "https://t3.ftcdn.net/jpg/16/55/10/30/360_F_1655103052_0PkAG5DGDHUQDxVEfMBCbtVS4yYrm7dL.jpg"  # 广告图片（必须是公网 https）
+AD_IMAGE_URL = "https://assets.hackquest.io/hackathons/projects/logo/rWa8z9BqwvVg75WMLCOq_.png"  # 广告图片（必须是公网 https）
 
 
 # /start：自动发送欢迎 + 底部键盘
@@ -54,7 +54,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     await update.message.reply_text(
-        "👋 Welcome to *NEXBIT-SAFE Wallet*\n\n"
+        "👋 Welcome to *X-Wallet*\n\n"
         "🔐 Secure non-custodial crypto wallet\n"
         "📊 Real-time market data & tools\n"
         "⚡ Fast, reliable, and safe\n\n"
@@ -75,7 +75,7 @@ async def handle_buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if text == "🚀 TRADE NOW":
         await update.message.reply_text(
-            f"🚀 Opening NEXBIT-SAFE Wallet:\n{TRADE_URL}"
+            f"🚀 Opening X-Wallet:\n{TRADE_URL}"
         )
 
     elif text == "🆘 SUPPORT":
@@ -93,11 +93,11 @@ async def send_daily_channel_ad(context: ContextTypes.DEFAULT_TYPE):
 
     keyboard = [
         [
-            InlineKeyboardButton("🔥 DEPOSIT", url="https://www.nexbitsafe.com/deposit"),
-            InlineKeyboardButton("📊 MARKET", url="https://www.nexbitsafe.com/market"),
+            InlineKeyboardButton("🔥 DEPOSIT", url="https://www.appyourplatform.info/deposit"),
+            InlineKeyboardButton("📊 MARKET", url="https://www.appyourplatform.info/market"),
         ],
         [
-            InlineKeyboardButton("⚖️ PLAN", url="https://www.nexbitsafe.com/arbitrage-products"),
+            InlineKeyboardButton("⚖️ PLAN", url="https://www.appyourplatform.info/plan"),
             InlineKeyboardButton("🤖 AI BOT", url="https://t.me/nexbitsafebot"),
         ],
         [
@@ -135,7 +135,7 @@ def main():
 
 
 
-    print("🤖 NEXBIT-SAFE Wallet Bot is running...")
+    print("🤖 X-Wallet Bot is running...")
     app.run_polling()
 
 if __name__ == "__main__":

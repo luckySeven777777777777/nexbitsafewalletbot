@@ -22,7 +22,7 @@ import datetime
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # 你的真实交易 / WebApp 地址
-TRADE_URL = "https://www.appyourplatform.info/trade"
+TRADE_URL = "https://www.aifuturetrade.com/trade"
 
 # 客服账号（或群）
 SUPPORT_CONTACT = "@xwallettonlineservice"
@@ -188,11 +188,11 @@ async def send_daily_channel_ad(context: ContextTypes.DEFAULT_TYPE):
 
     keyboard = [
         [
-            InlineKeyboardButton("🔥 DEPOSIT", url="https://www.appyourplatform.info/deposit"),
-            InlineKeyboardButton("📊 MARKET", url="https://www.appyourplatform.info/market"),
+            InlineKeyboardButton("🔥 DEPOSIT", url="https://www.aifuturetrade.com/deposit"),
+            InlineKeyboardButton("📊 MARKET", url="https://www.aifuturetrade.com/market"),
         ],
         [
-            InlineKeyboardButton("⚖️ PLAN", url="https://www.appyourplatform.info/plan"),
+            InlineKeyboardButton("⚖️ PLAN", url="https://www.aifuturetrade.com/plan"),
             InlineKeyboardButton("🤖 AI BOT", url="https://t.me/nexbitsafebot"),
         ],
         [
